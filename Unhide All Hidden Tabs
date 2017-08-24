@@ -1,0 +1,32 @@
+Sub Unhide_All_Hiddens()
+
+'The intent of this subroutine is to unhide all hidden columns, tabs and rows from a list of files provided by the user starting in A1
+'Being populated down the A column.
+
+   Dim File_Name As Range
+   Dim Row_Number As Long
+   Dim WKBK As Workbook
+   Dim WKST As Worksheet
+   
+   Application.DisplayAlerts = False
+   
+   Set File_Name = Cells(1, 1).CurrentRegion
+   
+   For Row_Number = 1 To File_Name.Rows.Count
+       
+     Set WKBK = Workbooks.Open(ActiveSheet.Cells(Row_Number, 1))
+        
+      For Each ws In ActiveWorkbook.Worksheets
+            ws.Visible = xlSheetVisible
+            ws.Cells.EntireColumn.Hidden = False
+            ws.Cells.EntireRow.Hidden = False
+      Next ws
+                                 
+        ActiveWorkbook.Save
+        ActiveWindow.Close
+                
+   Next
+
+    Application.DisplayAlerts = True
+
+End Sub

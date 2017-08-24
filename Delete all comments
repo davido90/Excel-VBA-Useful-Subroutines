@@ -1,0 +1,29 @@
+Sub Delete_All_Comments()
+
+'The intent of this is to subroutine is to delete all the comments from each tab of a list of files provided by the user starting in A1
+'Being populated down the A column.
+
+   Dim File_Name As Range
+   Dim Row_Number As Long
+   Dim WKBK As Workbook
+      
+   Application.DisplayAlerts = False
+   Set File_Name = Cells(1, 1).CurrentRegion
+   
+   For Row_Number = 1 To File_Name.Rows.Count
+      Set WKBK = Workbooks.Open(ActiveSheet.Cells(Row_Number, 1))
+        
+      'This deletes all the comments in the workbook
+      For Each xWs In Application.ActiveWorkbook.Sheets
+        For Each xComment In xWs.Comments
+          xComment.Delete
+        Next
+      Next
+                              
+        ActiveWorkbook.Save
+        ActiveWindow.Close         
+   Next
+
+    Application.DisplayAlerts = True
+
+End Sub
